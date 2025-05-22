@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Simulador Textil Oncebay</title>
+    <title>Textil Oncebay - Productos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -11,27 +11,27 @@
 
 <body class="bg-light">
 
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Textil Oncebay</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.html">
+                            Mi Carrito (<span id="cart-item-count">0</span>)
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="container py-5">
         <div class="text-center mb-4">
-            <h1 class="display-5 fw-bold text-primary">Simulador de Compra - Textil Oncebay</h1>
+            <h1 class="display-5 fw-bold text-primary">Nuestros Productos Artesanales</h1>
         </div>
 
-        <div class="card shadow p-4 mb-4">
-            <h2 class="h5">Nuestros Productos</h2>
-            <div id="productos-container" class="row">
-            </div>
-        </div>
-
-        <div class="card shadow p-4">
-            <h2 class="h5">Tu Carrito de Compras</h2>
-            <div id="carrito-container">
-                <p id="carrito-vacio-mensaje" class="text-muted">Tu carrito está vacío.</p>
-            </div>
-            <hr>
-            <div class="d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">Total a Pagar: S/ <span id="total-pagar">0.00</span></h4>
-                <button id="finalizar-compra-btn" class="btn btn-success" disabled>Finalizar Compra</button>
-            </div>
+        <div class="row" id="productos-container">
         </div>
     </div>
 

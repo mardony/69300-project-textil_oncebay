@@ -2,35 +2,110 @@
 
 body {
     font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #1e1e1e;
+    /* Entire body background */
+    color: #ffffff;
+    /* Text color for better contrast on dark background */
 }
 
+/* Customizing the Navbar */
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.navbar-dark.bg-primary {
+    /* Targeting the navbar with these specific classes */
+    background-color: #027381 !important;
+    /* Navbar background */
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    /* Slightly lighter text for links */
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #ffffff;
+    /* White text on hover */
+}
+
+/* Customizing the Main Heading on both pages */
+.display-5.fw-bold.text-primary {
+    color: #027381 !important;
+    /* "Nuestros Productos Artesanales" heading color */
+}
+
+/* Card background color adjustment for readability on dark background */
 .card {
     border-radius: 0.75rem;
+    overflow: hidden;
+    background-color: #2c2c2c;
+    /* Slightly lighter card background */
+    color: #e2e6ea;
+    /* Text color inside cards */
+    border: 1px solid #3a3a3a;
+    /* Subtle border for cards */
 }
 
+.card-img-top {
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+    /* Ensure title is visible */
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #ced4da;
+    /* Lighter text for description */
+}
+
+/* Customizing Button Colors */
 .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #027381;
+    /* Primary button background */
+    border-color: #027381;
+    /* Primary button border */
+    transition: background-color 0.3s ease;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
+    background-color: #015e68;
+    /* Darker shade on hover */
+    border-color: #015e68;
 }
 
 .btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
+    background-color: #027381;
+    /* Success button background */
+    border-color: #027381;
+    /* Success button border */
+    transition: background-color 0.3s ease;
 }
 
 .btn-success:hover {
-    background-color: #218838;
-    border-color: #218838;
+    background-color: #015e68;
+    /* Darker shade on hover */
+    border-color: #015e68;
 }
 
 .btn-danger {
     background-color: #dc3545;
+    /* Keeping red for danger/delete */
     border-color: #dc3545;
+    transition: background-color 0.3s ease;
 }
 
 .btn-danger:hover {
@@ -38,7 +113,34 @@ body {
     border-color: #c82333;
 }
 
-#productos-container .card {
-    height: 100%;
-    /* Asegura que todas las tarjetas tengan la misma altura */
+.btn-outline-danger {
+    /* For "Vaciar Carrito" button */
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* Specific styles for cart page */
+#carrito-items-container img {
+    border: 1px solid #4a4a4a;
+    /* Border for miniature images */
+}
+
+#total-pagar {
+    color: #fff;
+    /* Ensure total text is visible */
+}
+
+.text-muted {
+    /* Adjust muted text for dark background */
+    color: #b0b0b0 !important;
+}
+
+hr {
+    /* Adjust separator color */
+    border-top: 1px solid #444;
 }

@@ -1,135 +1,80 @@
 // js/main.js
 
-// Datos base
+// Product data (shared across both JS files for simplicity)
 const productos = [
-    { id: 1, nombre: "Tapiz Andino", precio: 120 },
-    { id: 2, nombre: "Bolso Artesanal", precio: 80 },
-    { id: 3, nombre: "Cojín Decorativo", precio: 60 },
-    { id: 4, nombre: "Camino de Mesa", precio: 100 },
+    { id: 1, nombre: "Tapiz Andino", precio: 120, imagen: "https://res.cloudinary.com/dyfyvybx4/image/upload/v1747888978/7a0a66cee77c9c2aedc7fcd2486ad010_yjesrx.jpg", descripcion: "Hermoso tapiz hecho a mano con diseños andinos tradicionales." },
+    { id: 2, nombre: "Bolso Artesanal", precio: 80, imagen: "https://res.cloudinary.com/dyfyvybx4/image/upload/v1747888995/9078253879b1c3ecc1a8238be9fa0485_abraaf.jpg", descripcion: "Bolso único, tejido con fibras naturales y detalles coloridos." },
+    { id: 3, nombre: "Cojín Decorativo", precio: 60, imagen: "https://res.cloudinary.com/dyfyvybx4/image/upload/v1747889041/8f8b4f73e00f17189d0a8b76b5172fef_xynxrb.jpg", descripcion: "Cojín bordado a mano para darle un toque étnico a tu hogar." },
+    { id: 4, nombre: "Camino de Mesa", precio: 100, imagen: "https://res.cloudinary.com/dyfyvybx4/image/upload/v1747888956/5b1ce2d4b51311600095d38d0e0d587e_oqryes.jpg", descripcion: "Elegante camino de mesa con patrones geométricos." },
+    { id: 5, nombre: "Manta Alpaca", precio: 250, imagen: "https://res.cloudinary.com/dyfyvybx4/image/upload/v1747888923/4cbbad2843f272fe32fbeb8abe166c04_jpqfd9.jpg", descripcion: "Manta suave de lana de alpaca, ideal para el frío." },
+    { id: 6, nombre: "Muñeca de Tela", precio: 35, imagen: "https://res.cloudinary.com/dyfyvybx4/image/upload/v1747888860/d48a71a6dc467750ffea8b387065fc69_udks7l.jpg", descripcion: "Muñeca artesanal de tela, vestida con trajes típicos." },
+    { id: 7, nombre: "Juego de Posavasos", precio: 45, imagen: "https://res.cloudinary.com/dyfyvybx4/image/upload/v1747888838/bf5520df02e174b3ddeaa379c31d223d_exhiwo.jpg", descripcion: "Set de posavasos tejidos, decorativos y funcionales." },
+    { id: 8, nombre: "Chal de Lana", precio: 95, imagen: "https://res.cloudinary.com/dyfyvybx4/image/upload/v1747888803/1e388d365f4b60ce3c0f0670708ce682_m5fm6r.jpg", descripcion: "Chal ligero y cálido, perfecto para cualquier ocasión." },
+    { id: 9, nombre: "Joyero de Madera", precio: 70, imagen: "https://res.cloudinary.com/dyfyvybx4/image/upload/v1747888758/96a2d540a082e260f3951a6e3dd9c2cc_jvgpus.jpg", descripcion: "Joyero tallado en madera, con diseños inspirados en la naturaleza." },
+    { id: 10, nombre: "Máscara Ceremonial", precio: 180, imagen: "https://res.cloudinary.com/dyfyvybx4/image/upload/v1747888737/688a9662651d247c8e509f7027f41040_p71bud.jpg", descripcion: "Réplica de máscara ceremonial andina, pieza de colección." }
 ];
 
-let carrito = [];
-
-// Referencias a elementos del DOM
 const productosContainer = document.getElementById('productos-container');
-const carritoContainer = document.getElementById('carrito-container');
-const totalPagarSpan = document.getElementById('total-pagar');
-const finalizarCompraBtn = document.getElementById('finalizar-compra-btn');
-const carritoVacioMensaje = document.getElementById('carrito-vacio-mensaje');
+const cartItemCountSpan = document.getElementById('cart-item-count');
 
-// --- Funciones del Simulador ---
-
-// Cargar carrito desde LocalStorage al inicio
-function cargarCarritoDesdeLocalStorage() {
+// --- Funciones de Utilidad (compartidas por necesidad en este esquema) ---
+function getCarritoFromLocalStorage() {
     const carritoGuardado = localStorage.getItem('carritoOncebay');
-    if (carritoGuardado) {
-        carrito = JSON.parse(carritoGuardado);
-        actualizarCarritoDOM();
-    }
+    return carritoGuardado ? JSON.parse(carritoGuardado) : [];
 }
 
-// Guardar carrito en LocalStorage
-function guardarCarritoEnLocalStorage() {
+function saveCarritoToLocalStorage(carrito) {
     localStorage.setItem('carritoOncebay', JSON.stringify(carrito));
 }
 
-// Mostrar productos disponibles en el DOM
+function updateCartCountDisplay() {
+    const carrito = getCarritoFromLocalStorage();
+    cartItemCountSpan.textContent = carrito.length;
+}
+
+// --- Funciones específicas de index.html ---
 function mostrarProductos() {
     productosContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar productos
     productos.forEach(producto => {
-        const productoCard = document.createElement('div');
-        productoCard.classList.add('col-md-3', 'mb-3'); // Clases de Bootstrap para diseño responsivo
-        productoCard.innerHTML = `
-            <div class="card h-100">
+        const productCard = document.createElement('div');
+        productCard.classList.add('col-lg-3', 'col-md-4', 'col-sm-6', 'mb-4'); // Clases de Bootstrap para diseño responsivo
+        productCard.innerHTML = `
+            <div class="card h-100 shadow-sm">
+                <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}" style="height: 200px; object-fit: cover;">
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">${producto.nombre}</h5>
-                    <p class="card-text flex-grow-1">Precio: S/ ${producto.precio.toFixed(2)}</p>
-                    <button class="btn btn-primary btn-sm mt-auto agregar-btn" data-id="${producto.id}">Agregar al Carrito</button>
+                    <p class="card-text">${producto.descripcion}</p>
+                    <p class="card-text fw-bold mt-auto">S/ ${producto.precio.toFixed(2)}</p>
+                    <button class="btn btn-primary agregar-btn" data-id="${producto.id}">Agregar al Carrito</button>
                 </div>
             </div>
         `;
-        productosContainer.appendChild(productoCard);
+        productosContainer.appendChild(productCard);
     });
 
     // Añadir event listeners a los botones de "Agregar al Carrito"
     document.querySelectorAll('.agregar-btn').forEach(button => {
         button.addEventListener('click', (event) => {
-            const productoId = parseInt(event.target.dataset.id);
-            const productoSeleccionado = productos.find(p => p.id === productoId);
-            if (productoSeleccionado) {
-                agregarProductoAlCarrito(productoSeleccionado);
+            const productId = parseInt(event.target.dataset.id);
+            const productToAdd = productos.find(p => p.id === productId);
+            if (productToAdd) {
+                addToCart(productToAdd);
             }
         });
     });
 }
 
-// Agregar producto al carrito y actualizar el DOM
-function agregarProductoAlCarrito(producto) {
-    carrito.push(producto);
-    guardarCarritoEnLocalStorage(); // Guardar cada vez que se agrega un producto
-    actualizarCarritoDOM();
+function addToCart(product) {
+    let carrito = getCarritoFromLocalStorage();
+    carrito.push(product); // Agregamos el objeto completo del producto
+    saveCarritoToLocalStorage(carrito);
+    updateCartCountDisplay();
+    // Opcional: Proporcionar feedback visual, por ejemplo, una pequeña notificación
+    alert(`"${product.nombre}" ha sido agregado al carrito.`);
 }
-
-// Eliminar producto del carrito y actualizar el DOM
-function eliminarProductoDelCarrito(productoId) {
-    const index = carrito.findIndex(producto => producto.id === productoId);
-    if (index !== -1) {
-        carrito.splice(index, 1);
-        guardarCarritoEnLocalStorage();
-        actualizarCarritoDOM();
-    }
-}
-
-// Actualizar la vista del carrito y el total en el DOM
-function actualizarCarritoDOM() {
-    carritoContainer.innerHTML = ''; // Limpiar el carrito antes de actualizar
-    let total = 0;
-
-    if (carrito.length === 0) {
-        carritoVacioMensaje.style.display = 'block'; // Mostrar mensaje de carrito vacío
-        finalizarCompraBtn.disabled = true;
-    } else {
-        carritoVacioMensaje.style.display = 'none'; // Ocultar mensaje
-        finalizarCompraBtn.disabled = false;
-        carrito.forEach(producto => {
-            const itemCarrito = document.createElement('div');
-            itemCarrito.classList.add('d-flex', 'justify-content-between', 'align-items-center', 'mb-2', 'border-bottom', 'pb-2');
-            itemCarrito.innerHTML = `
-                <span>${producto.nombre} - S/ ${producto.precio.toFixed(2)}</span>
-                <button class="btn btn-danger btn-sm eliminar-btn" data-id="${producto.id}">Eliminar</button>
-            `;
-            carritoContainer.appendChild(itemCarrito);
-            total += producto.precio;
-        });
-
-        // Añadir event listeners a los botones de "Eliminar"
-        document.querySelectorAll('.eliminar-btn').forEach(button => {
-            button.addEventListener('click', (event) => {
-                const productoId = parseInt(event.target.dataset.id);
-                eliminarProductoDelCarrito(productoId);
-            });
-        });
-    }
-    totalPagarSpan.textContent = total.toFixed(2);
-}
-
-// Finalizar la compra
-function finalizarCompra() {
-    if (carrito.length > 0) {
-        alert(`¡Compra finalizada! Has adquirido ${carrito.length} productos por un total de S/ ${totalPagarSpan.textContent}. ¡Gracias por tu compra!`);
-        carrito = []; // Vaciar el carrito
-        guardarCarritoEnLocalStorage(); // Guardar el carrito vacío
-        actualizarCarritoDOM(); // Actualizar la vista del carrito
-    } else {
-        alert('Tu carrito está vacío. Agrega productos antes de finalizar la compra.');
-    }
-}
-
-// --- Event Listeners Globales ---
-finalizarCompraBtn.addEventListener('click', finalizarCompra);
 
 // --- Inicialización del Simulador ---
 document.addEventListener('DOMContentLoaded', () => {
-    cargarCarritoDesdeLocalStorage();
     mostrarProductos();
+    updateCartCountDisplay(); // Actualizar el contador del carrito al cargar la página
 });
