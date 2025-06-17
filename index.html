@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body class="bg-light">
@@ -33,8 +35,20 @@
 
         <div class="row" id="productos-container">
         </div>
+
+        <!-- Nueva sección de equipo -->
+        <div class="container py-5">
+            <div class="text-center mb-4">
+                <h1 class="display-5 fw-bold text-primary">Nuestro Equipo</h1>
+                <p class="text-muted">Pase el cursor sobre los iconos para ver la información</p>
+            </div>
+            <div class="row justify-content-center" id="equipo-container">
+                <!-- Las tarjetas de colaboradores se generarán aquí con JS -->
+            </div>
+        </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="js/main.js"></script>
 </body>
 

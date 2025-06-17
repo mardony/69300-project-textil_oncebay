@@ -144,3 +144,195 @@ hr {
     /* Adjust separator color */
     border-top: 1px solid #444;
 }
+
+
+
+/* Nuevos estilos para las tarjetas de colaboradores */
+.colaborador-container {
+    width: 350px;
+    height: 450px;
+    margin: 20px auto;
+    perspective: 1000px;
+}
+
+.colaborador-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.8s;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(135deg, #2c2c2c 0%, #1e1e1e 100%);
+    overflow: hidden;
+}
+
+.colaborador-img-container {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 5px solid #027381;
+    overflow: hidden;
+    z-index: 2;
+    background: #2c2c2c;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.colaborador-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.iconos-container {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    z-index: 3;
+}
+
+.icono-info {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #027381;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.icono-info:hover {
+    background: #015e68;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.info-display {
+    position: absolute;
+    top: 250px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: white;
+    padding: 15px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(40, 40, 40, 0.8);
+    border-top: 2px solid #027381;
+    border-bottom: 2px solid #027381;
+    transition: opacity 0.3s ease;
+}
+
+.info-texto {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.nombre-colaborador {
+    position: absolute;
+    top: 240px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: white;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.fondo-tarjeta {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #027381 0%, #015e68 100%);
+    opacity: 0.1;
+    z-index: 1;
+}
+
+
+/* Estilos para el texto vertical */
+.vertical-text-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 50px;
+    background: rgba(2, 115, 129, 0.3);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+    overflow: hidden;
+    border-right: 1px solid rgba(2, 115, 129, 0.3);
+}
+
+.vertical-text {
+    position: absolute;
+    left: 0;
+    width: 100vh;
+    height: 50px;
+    transform-origin: left top;
+    transform: rotate(90deg) translateY(-100%);
+    white-space: nowrap;
+    animation: scrollText 20s linear infinite;
+    font-size: 2rem;
+    font-weight: bold;
+    color: rgba(2, 115, 129, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+@keyframes scrollText {
+    0% {
+        transform: rotate(90deg) translateY(-100%);
+    }
+
+    100% {
+        transform: rotate(90deg) translateY(100vh);
+    }
+}
+
+.vertical-text:hover {
+    animation-play-state: paused;
+    color: #027381;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Efecto de gradiente en los bordes */
+.vertical-text-container:before,
+.vertical-text-container:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.vertical-text-container:before {
+    top: 0;
+    background: linear-gradient(to bottom, rgba(30, 30, 30, 1), rgba(30, 30, 30, 0));
+}
+
+.vertical-text-container:after {
+    bottom: 0;
+    background: linear-gradient(to top, rgba(30, 30, 30, 1), rgba(30, 30, 30, 0));
+}

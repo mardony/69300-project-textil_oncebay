@@ -78,3 +78,189 @@ document.addEventListener('DOMContentLoaded', () => {
     mostrarProductos();
     updateCartCountDisplay(); // Actualizar el contador del carrito al cargar la página
 });
+
+
+
+
+// Función para mostrar colaboradores con datos de la API
+function mostrarColaboradores(users) {
+    const equipoContainer = document.getElementById('equipo-container');
+    equipoContainer.innerHTML = ''; // Limpiar contenedor
+
+    users.forEach(user => {
+        const nombreCompleto = `${user.name.first} ${user.name.last}`;
+        const fechaNacimiento = new Date(user.dob.date).toLocaleDateString('es-ES', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        const direccionCompleta = `${user.location.street.number} ${user.location.street.name}, ${user.location.city}, ${user.location.state}, ${user.location.country}`;
+
+        const colabCard = document.createElement('div');
+        colabCard.classList.add('col-lg-4', 'col-md-6', 'colaborador-container');
+        colabCard.innerHTML = `
+            <div class="colaborador-card">
+                <div class="fondo-tarjeta"></div>
+                <div class="colaborador-img-container">
+                    <img src="${user.picture.large}" class="colaborador-img" alt="${nombreCompleto}">
+                </div>
+
+                <div class="nombre-colaborador">${nombreCompleto}</div>
+
+                <div class="info-display">
+                    <p class="info-texto">Pase el cursor sobre un icono para ver información</p>
+                </div>
+
+                <div class="iconos-container">
+                    <div class="icono-info" data-info="nombre" data-texto="${nombreCompleto}">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="icono-info" data-info="correo" data-texto="${user.email}">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="icono-info" data-info="fecha" data-texto="${fechaNacimiento}">
+                        <i class="fas fa-birthday-cake"></i>
+                    </div>
+                    <div class="icono-info" data-info="direccion" data-texto="${direccionCompleta}">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="icono-info" data-info="telefono" data-texto="${user.phone}">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                </div>
+            </div>
+        `;
+        equipoContainer.appendChild(colabCard);
+    });
+
+    // Añadir eventos a los iconos
+    document.querySelectorAll('.icono-info').forEach(icono => {
+        icono.addEventListener('mouseover', function () {
+            const texto = this.getAttribute('data-texto');
+            const infoDisplay = this.closest('.colaborador-card').querySelector('.info-texto');
+            infoDisplay.textContent = texto;
+        });
+    });
+}
+
+// Función para obtener colaboradores desde la API
+function obtenerColaboradores() {
+    $.ajax({
+        url: 'https://randomuser.me/api/?results=5&nat=us,gb,ca,au,nz',
+        dataType: 'json',
+        success: function (data) {
+            mostrarColaboradores(data.results);
+        },
+        error: function () {
+            console.log('Error al obtener los colaboradores');
+            // Mostrar datos de respaldo
+            mostrarColaboradores([
+                {
+                    name: { first: 'María', last: 'Quispe' },
+                    email: 'maria.quispe@textiloncebay.com',
+                    dob: { date: '1985-05-15T00:00:00Z' },
+                    location: {
+                        street: { number: 123, name: 'Av. Los Artesanos' },
+                        city: 'Lima',
+                        state: 'Lima',
+                        country: 'Perú'
+                    },
+                    phone: '+51 987654321',
+                    picture: { large: 'https://res.cloudinary.com/dyfyvybx4/image/upload/v1747888978/7a0a66cee77c9c2aedc7fcd2486ad010_yjesrx.jpg' }
+                },
+                {
+                    name: { first: 'Carlos', last: 'Huamán' },
+                    email: 'carlos.human@textiloncebay.com',
+                    dob: { date: '1990-11-22T00:00:00Z' },
+                    location: {
+                        street: { number: 456, name: 'Calle Tejedores' },
+                        city: 'Cusco',
+                        state: 'Cusco',
+                        country: 'Perú'
+                    },
+                    phone: '+51 912345678',
+                    picture: { large: 'https://res.cloudinary.com/dyfyvybx4/image/upload/v1747888995/9078253879b1c3ecc1a8238be9fa0485_abraaf.jpg' }
+                },
+                {
+                    name: { first: 'Rosa', last: 'Condori' },
+                    email: 'rosa.condori@textiloncebay.com',
+                    dob: { date: '1988-08-03T00:00:00Z' },
+                    location: {
+                        street: { number: 789, name: 'Jr. Alpacas' },
+                        city: 'Puno',
+                        state: 'Puno',
+                        country: 'Perú'
+                    },
+                    phone: '+51 934567890',
+                    picture: { large: 'https://res.cloudinary.com/dyfyvybx4/image/upload/v1747889041/8f8b4f73e00f17189d0a8b76b5172fef_xynxrb.jpg' }
+                },
+                {
+                    name: { first: 'Luis', last: 'Mamani' },
+                    email: 'luis.mamani@textiloncebay.com',
+                    dob: { date: '1982-01-19T00:00:00Z' },
+                    location: {
+                        street: { number: 101, name: 'Pasaje Colores' },
+                        city: 'Arequipa',
+                        state: 'Arequipa',
+                        country: 'Perú'
+                    },
+                    phone: '+51 945678901',
+                    picture: { large: 'https://res.cloudinary.com/dyfyvybx4/image/upload/v1747888956/5b1ce2d4b51311600095d38d0e0d587e_oqryes.jpg' }
+                },
+                {
+                    name: { first: 'Ana', last: 'Flores' },
+                    email: 'ana.flores@textiloncebay.com',
+                    dob: { date: '1993-07-30T00:00:00Z' },
+                    location: {
+                        street: { number: 222, name: 'Av. Tradiciones' },
+                        city: 'Ayacucho',
+                        state: 'Ayacucho',
+                        country: 'Perú'
+                    },
+                    phone: '+51 956789012',
+                    picture: { large: 'https://res.cloudinary.com/dyfyvybx4/image/upload/v1747888923/4cbbad2843f272fe32fbeb8abe166c04_jpqfd9.jpg' }
+                }
+            ]);
+        }
+    });
+}
+
+// Actualizar inicialización
+document.addEventListener('DOMContentLoaded', () => {
+    mostrarProductos();
+    obtenerColaboradores(); // Obtener colaboradores desde la API
+    updateCartCountDisplay();
+});
+
+
+// Función para el texto vertical cíclico
+function crearTextoVertical() {
+    const texto = "Textil 11bay - Arte y Tradición - ";
+    const repeticiones = 20;
+    const elemento = document.getElementById('verticalText');
+
+    // Repetir el texto para crear un efecto continuo
+    elemento.textContent = texto.repeat(repeticiones);
+
+    // Ajustar dinámicamente la velocidad según la longitud
+    const duracion = 20 + (repeticiones * 2);
+    elemento.style.animationDuration = `${duracion}s`;
+
+    // Cambiar aleatoriamente el texto al hacer clic
+    elemento.addEventListener('click', function () {
+        const frases = [
+            "Textil 11bay - Tejidos Andinos - ",
+            "Textil 11bay - Artesanía Peruana - ",
+            "Textil 11bay - Tradición Milenaria - ",
+            "Textil 11bay - Calidad y Diseño - "
+        ];
+
+        const nuevaFrase = frases[Math.floor(Math.random() * frases.length)];
+        elemento.textContent = nuevaFrase.repeat(repeticiones);
+        elemento.style.color = `hsl(${Math.random() * 360}, 70%, 60%)`;
+    });
+}
+
+// Llamar a la función al cargar la página
+document.addEventListener('DOMContentLoaded', crearTextoVertical);
